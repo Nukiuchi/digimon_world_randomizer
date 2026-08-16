@@ -1,5 +1,4 @@
 const packager = require('@electron/packager')
-const rebuild = require('electron-rebuild').default
 
 (async () => {
   try {
