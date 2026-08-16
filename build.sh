@@ -17,15 +17,14 @@ pyinstaller --clean --onefile --log-level ERROR digimon_randomize.py
 
 echo "==> Building Electron GUI frontend..."
 cd gui
-# 1. Grant approval for Electron's install script in npm
-npm install-scripts approve --all 2>/dev/null || npx npm install-scripts approve --all 2>/dev/null || true
-# 2. Re-run install
-npm install
-# 3. Manually execute the Electron binary download script
-node node_modules/electron/install.js
-# 4. Compile frontend TypeScript assets
+
+# 1. Update Electron to a modern version compatible with current Linux runtimes
+npm install --save-dev electron@latest electron-packager@latest
+
+# 2. Build TypeScript assets
 npm run build
-# 5. Bundle with electron-packager
+
+# 3. Package for Linux x64
 npx electron-packager . digimon_randomize --platform=linux --arch=x64 --out=dist_app --overwrite
 cd ..
 
