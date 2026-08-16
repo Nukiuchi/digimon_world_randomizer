@@ -16,11 +16,18 @@ pyinstaller --clean --onefile --log-level ERROR digimon_randomize.py
 echo "==> Building Electron GUI frontend..."
 cd gui
 npm config set ignore-scripts false
-npm install-scripts approve electron
-npm install
+npm_config_ignore_scripts=false npm install
 node node_modules/electron/install.js
 npm run build
-npm run package
+
+# Package Electron application
+npx electron-packager . digimon_randomize \
+    --platform=linux \
+    --arch=x64 \
+    --out=dist_app \
+    --overwrite \
+    --electron-version=4.2.12
+
 cd ..
 
 echo "==> Assembling distribution folder..."
