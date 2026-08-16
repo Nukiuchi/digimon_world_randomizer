@@ -7,27 +7,27 @@ elif [ -f "venv/bin/activate" ]; then
     source venv/bin/activate
 fi
 
-echo "==> Cleaning old build artifacts..."
-rm -rf dist gui/dist_app gui/dist
+# Clean up build artifacts
+rm -rf dist gui/digimon_randomize-linux-x64 gui/digimon_randomize-win32-x64
 
-echo "==> Packaging Python backend with PyInstaller..."
+# Build Linux Python binary
 pyinstaller --clean --onefile --log-level ERROR digimon_randomize.py
 
-echo "==> Building Electron GUI frontend..."
+# Build GUI package
 cd gui
+npm install
 npm run build
 npm run package
 cd ..
 
-echo "==> Assembling distribution folder..."
+# Copy packaged GUI files
+mkdir -p dist/gui
+cp -r gui/digimon_randomize-linux-x64/* dist/gui/
+
+# Move binary and configuration into app resources
 mkdir -p dist/gui/resources/app
-
-# Find and copy output folder
-BUILD_OUTPUT=$(find gui/dist_app -maxdepth 1 -type d -name "*-linux-x64" | head -n 1)
-cp -r "$BUILD_OUTPUT"/* dist/gui/
-
-# Copy configuration and compiled backend executable
-cp settings.ini README.md dist/gui/resources/app/
+cp settings.ini dist/gui/resources/app/
+cp README.md dist/gui/resources/app/
 mv dist/digimon_randomize dist/gui/resources/app/
 
-echo "==> Build finished successfully in dist/gui!"
+# Create ZIP archive
