@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -e  # Exit immediately if any command fails
 
+if [ -n "$VIRTUAL_ENV" ]; then
+    echo "Using active virtual environment: $VIRTUAL_ENV"
+elif [ -f "venv/bin/activate" ]; then
+    source venv/bin/activate
+fi
+
 echo "==> Cleaning old build artifacts..."
 rm -rf dist
 rm -rf gui/digimon_randomize-linux-x64
