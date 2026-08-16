@@ -17,22 +17,22 @@ pyinstaller --clean --onefile --log-level ERROR digimon_randomize.py
 
 echo "==> Building Electron GUI frontend..."
 cd gui
-npm install
+npm install --ignore-scripts=false
+node node_modules/electron/install.js || npm rebuild electron
 npm run build
-# Force electron-packager to target Linux x64 explicitly
 npx electron-packager . digimon_randomize --platform=linux --arch=x64 --out=dist_app --overwrite
 cd ..
 
 echo "==> Assembling distribution folder..."
 mkdir -p dist/gui/resources/app
 
-# Copy packaged app files
+# Copy the built Electron app into dist/gui
 cp -r gui/dist_app/digimon_randomize-linux-x64/* dist/gui/
 
-# Copy static configurations
+# Copy static configuration files
 cp settings.ini README.md dist/gui/resources/app/
 
-# Move the compiled Python executable
+# Move the Python executable into resources/app
 mv dist/digimon_randomize dist/gui/resources/app/
 
 echo "==> Creating final zip archive..."
