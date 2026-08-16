@@ -26,13 +26,13 @@ cd ..
 echo "==> Assembling distribution folder..."
 mkdir -p dist/gui/resources/app
 
-# Copy the Linux-packaged Electron app into dist/gui
-cp -r gui/*-linux-x64/* dist/gui/
+# Copy packaged app files
+cp -r gui/dist_app/digimon_randomize-linux-x64/* dist/gui/
 
-# Copy configuration and static resources
+# Copy static configurations
 cp settings.ini README.md dist/gui/resources/app/
 
-# Move the compiled Python binary into the Electron app folder
+# Move the compiled Python executable
 mv dist/digimon_randomize dist/gui/resources/app/
 
 echo "==> Creating final zip archive..."
