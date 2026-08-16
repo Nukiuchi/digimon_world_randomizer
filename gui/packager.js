@@ -2,7 +2,9 @@ const packagerModule = require('@electron/packager') || require('electron-packag
 const packager = packagerModule.packager || packagerModule;
 
 async function run() {
-  console.log("==> Starting Electron Packaging...");
+  console.log("==> Starting Electron packaging...");
+  console.log("==> Fetching Electron binary and packaging (please wait)...");
+
   try {
     const appPaths = await packager({
       dir: '.',
@@ -11,7 +13,12 @@ async function run() {
       arch: 'x64',
       out: 'dist_app',
       overwrite: true,
-      prune: true
+      prune: false,
+      ignore: [
+        /^\/dist_app/,
+        /^\/dist/,
+        /^\/\.git/
+      ]
     });
     console.log(`==> Packaging complete! Output located at: ${appPaths}`);
   } catch (err) {
