@@ -5,8 +5,10 @@
     "moduleResolution": "Node16",
     "rootDir": "./src",
     "outDir": "./dist",
+    "jsx": "react",
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "strict": false
   },
   "include": [
