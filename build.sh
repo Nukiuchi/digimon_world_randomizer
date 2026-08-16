@@ -15,9 +15,8 @@ pyinstaller --clean --onefile --log-level ERROR digimon_randomize.py
 
 echo "==> Building Electron GUI frontend..."
 cd gui
-npm install
 npm run build
-npx electron-packager . digimon_randomize --platform=linux --arch=x64 --out=dist_app --ignore=dist_app --overwrite
+npm run package
 cd ..
 
 echo "==> Assembling distribution folder..."
