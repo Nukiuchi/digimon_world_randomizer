@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "skipLibCheck": true,
     "module": "commonjs",
     "noImplicitAny": true,
     "sourceMap": true,
@@ -8,9 +9,14 @@
     "jsx": "react",
     "paths": {
       "*": ["node_modules/*"]
-    }
+    },
+    "moduleResolution": "node",
+    "target": "es2018"
   },
   "include": [
     "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }
