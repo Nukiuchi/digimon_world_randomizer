@@ -8,7 +8,7 @@ elif [ -f "venv/bin/activate" ]; then
 fi
 
 echo "==> Cleaning old build artifacts..."
-rm -rf dist gui/digimon_randomize-linux-x64 gui/digimon_randomize-win32-x64 gui/dist gui/node_modules
+rm -rf dist build gui/digimon_randomize-linux-x64 gui/digimon_randomize-win32-x64 gui/dist gui/node_modules
 
 echo "==> Packaging Python backend with PyInstaller..."
 pyinstaller --clean --onefile --log-level ERROR digimon_randomize.py
