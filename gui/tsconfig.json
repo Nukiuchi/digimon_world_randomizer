@@ -1,22 +1,19 @@
 {
   "compilerOptions": {
-    "skipLibCheck": true,
+    "target": "es2020",
     "module": "commonjs",
-    "noImplicitAny": true,
-    "sourceMap": true,
-    "outDir": "dist",
-    "baseUrl": ".",
-    "jsx": "react",
-    "paths": {
-      "*": ["node_modules/*"]
-    },
-    "moduleResolution": "node",
-    "target": "es2018"
+    "moduleResolution": "node16",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "strict": false
   },
   "include": [
     "src/**/*"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist"
   ]
 }
