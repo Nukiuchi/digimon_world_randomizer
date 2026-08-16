@@ -1,6 +1,8 @@
 # Digimon World Randomizer
 ##### Digimon World 1 (PSX) data randomizer.  Create a unique, brand new experience for the classic game!
 
+This fork is an attempted conversion to use on Linux.
+
 ###### Steps for first time setup:
 1. Download the latest release of `digimon_randomizer.zip`
 2. Unzip to wherever
