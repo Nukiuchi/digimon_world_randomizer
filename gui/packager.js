@@ -1,6 +1,8 @@
-const packager = require('@electron/packager');
+const packagerModule = require('@electron/packager') || require('electron-packager');
+const packager = packagerModule.packager || packagerModule;
 
-async function main() {
+async function run() {
+  console.log("==> Starting Electron Packaging...");
   try {
     const appPaths = await packager({
       dir: '.',
@@ -11,11 +13,11 @@ async function main() {
       overwrite: true,
       prune: true
     });
-    console.log(`Successfully packaged to: ${appPaths}`);
+    console.log(`==> Packaging complete! Output located at: ${appPaths}`);
   } catch (err) {
-    console.error('Build failed:', err);
+    console.error("==> Packaging failed:", err);
     process.exit(1);
   }
 }
 
-main();
+run();
