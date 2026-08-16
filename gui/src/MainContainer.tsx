@@ -70,7 +70,7 @@ export default class MainContainer extends Component<Props, State> {
 
     /* select file to save settings to */
     private onMenuSaveSettings = (): void => {
-        let path = remote.dialog.showSaveDialog( {
+        let path = remote.dialog.showSaveDialogSync( {
                         title: "Select settings file to save",
                         filters: [ { name: "Settings File", extensions: [ "json" ] } ],
                         defaultPath: this.props.rootDirectory 
@@ -99,7 +99,7 @@ export default class MainContainer extends Component<Props, State> {
 
     /* Load settings from menu */
     private onMenuLoadSettings = (): void => {
-        let path = remote.dialog.showOpenDialog( {
+        let path = remote.dialog.showOpenDialogSync( {
                         title: "Select settings file to load",
                         properties: [ 'openFile' ],
                         filters: [ { name: "Settings File", extensions: [ "json" ] } ],
