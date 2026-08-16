@@ -1,21 +1,16 @@
 {
   "compilerOptions": {
-    "target": "es2020",
-    "module": "Node16",
-    "moduleResolution": "Node16",
-    "rootDir": "./src",
-    "outDir": "./dist",
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "baseUrl": ".",
     "jsx": "react",
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": false
+    "paths": {
+      "*": ["node_modules/*"]
+    }
   },
   "include": [
     "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
   ]
 }
