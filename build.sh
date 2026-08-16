@@ -19,7 +19,6 @@ cd ..
 echo "==> Assembling Linux Electron package..."
 mkdir -p dist/gui
 
-# Locate cached Electron zip or download if missing
 ZIP_FILE=$(find "$CACHE_DIR" -name "electron-v${ELECTRON_VERSION}-linux-x64.zip" 2>/dev/null | head -n 1)
 
 if [ -z "$ZIP_FILE" ]; then
@@ -29,22 +28,23 @@ if [ -z "$ZIP_FILE" ]; then
     curl -L "https://github.com/electron/electron/releases/download/v${ELECTRON_VERSION}/electron-v${ELECTRON_VERSION}-linux-x64.zip" -o "$ZIP_FILE"
 fi
 
-# Unpack binary and rename main executable
 unzip -q -o "$ZIP_FILE" -d dist/gui/
 mv dist/gui/electron dist/gui/digimon_randomize
 
-# Copy app code into Electron's resource directory
+# Create application bundle
 mkdir -p dist/gui/resources/app
-cp gui/package.json dist/gui/resources/app/
-cp -r gui/dist dist/gui/resources/app/
-cp -r gui/node_modules dist/gui/resources/app/ 2>/dev/null || true
 
-# Inject backend binary and configuration
+# Copy all GUI root files (index.html, package.json, etc.) and compiled dist folder
+cp -r gui/* dist/gui/resources/app/ 2>/dev/null || true
+rm -rf dist/gui/resources/app/node_modules
+cp -r gui/node_modules dist/gui/resources/app/
+
+# Copy Python backend binary and settings into resources/app
+mkdir -p dist/gui/resources/app/dist
+mv dist/digimon_randomize dist/gui/resources/app/
 cp settings.ini dist/gui/resources/app/ 2>/dev/null || true
 cp README.md dist/gui/resources/app/ 2>/dev/null || true
-mv dist/digimon_randomize dist/gui/resources/app/
 
-# Create archive
 zip -r dist/digimon_randomizer.zip dist/gui
 
-echo "==> Build complete! Binary located at: dist/gui/digimon_randomize"
+echo "==> Build complete! Run ./dist/gui/digimon_randomize to test."
