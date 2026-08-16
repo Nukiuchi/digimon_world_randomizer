@@ -1,4 +1,4 @@
-import { remote } from 'electron'
+const { remote } = require('electron') as any;
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { Component } from 'react'
@@ -45,7 +45,7 @@ export default class MainContainer extends Component<Props, State> {
 
     /* select file to use for base ROM */
     private onMenuSelectROM = ( e: React.FormEvent<HTMLInputElement> ): void => {
-        let path = e.currentTarget.files?.[ 0 ]?.path
+        let path = (e.currentTarget.files?.[ 0 ] as any)?.path;
 
         if( path ) {
             this.data.General.InputFile = path
