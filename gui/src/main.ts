@@ -14,10 +14,11 @@ function createWindow() {
     width: 600,
     minWidth: 550,
     webPreferences: {
-        nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false
     }
   } )
-
+  remoteMain.enable(mainWindow.webContents)
   // and load the index.html of the app.
   mainWindow.loadFile( path.join( __dirname, "../index.html" ) )
 
