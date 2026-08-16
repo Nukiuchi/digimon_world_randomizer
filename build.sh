@@ -14,11 +14,11 @@ rm -rf dist gui/dist_app
 echo "==> Packaging Python backend with PyInstaller..."
 pyinstaller --clean --onefile --log-level ERROR digimon_randomize.py
 
-echo "==> Building Electron GUI frontend with updated Electron..."
+echo "==> Building Electron GUI frontend..."
 cd gui
 npm install
-npm install --save-dev electron@latest electron-packager@latest
-npm run build
+npm install --save-dev typescript@latest electron@latest electron-packager@latest
+npx tsc --skipLibCheck
 npx electron-packager . digimon_randomize --platform=linux --arch=x64 --out=dist_app --overwrite
 cd ..
 
