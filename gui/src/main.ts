@@ -1,3 +1,6 @@
+import * as remoteMain from '@electron/remote/main'
+remoteMain.initialize()
+
 import { app, BrowserWindow, Menu } from "electron"
 import * as path from "path"
 
