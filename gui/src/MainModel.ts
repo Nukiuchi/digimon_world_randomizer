@@ -1,4 +1,4 @@
-import * as hash from "object-hash"
+import hash from "object-hash";
 import * as path from "path"
 
 /* Local Types */
