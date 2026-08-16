@@ -1,36 +1,50 @@
 #!/usr/bin/env bash
 set -e
 
-if [ -n "$VIRTUAL_ENV" ]; then
-    echo "Using active virtual environment: $VIRTUAL_ENV"
-elif [ -f "venv/bin/activate" ]; then
-    source venv/bin/activate
-fi
+ELECTRON_VERSION="28.3.3"
+CACHE_DIR="$HOME/.cache/electron"
 
 echo "==> Cleaning old build artifacts..."
-rm -rf dist build gui/digimon_randomize-linux-x64 gui/digimon_randomize-win32-x64 gui/dist gui/node_modules
+rm -rf dist gui/dist
 
 echo "==> Packaging Python backend with PyInstaller..."
 pyinstaller --clean --onefile --log-level ERROR digimon_randomize.py
 
-echo "==> Building Electron GUI frontend..."
+echo "==> Compiling TypeScript frontend..."
 cd gui
 npm install
 npm run build
-node packager.js
 cd ..
 
-echo "==> Assembling distribution folder..."
+echo "==> Assembling Linux Electron package..."
 mkdir -p dist/gui
-cp -r gui/digimon_randomize-linux-x64/* dist/gui/
+
+# Locate cached Electron zip or download if missing
+ZIP_FILE=$(find "$CACHE_DIR" -name "electron-v${ELECTRON_VERSION}-linux-x64.zip" 2>/dev/null | head -n 1)
+
+if [ -z "$ZIP_FILE" ]; then
+    echo "==> Downloading Electron binary v${ELECTRON_VERSION}..."
+    mkdir -p "$CACHE_DIR"
+    ZIP_FILE="$CACHE_DIR/electron-v${ELECTRON_VERSION}-linux-x64.zip"
+    curl -L "https://github.com/electron/electron/releases/download/v${ELECTRON_VERSION}/electron-v${ELECTRON_VERSION}-linux-x64.zip" -o "$ZIP_FILE"
+fi
+
+# Unpack binary and rename main executable
+unzip -q -o "$ZIP_FILE" -d dist/gui/
+mv dist/gui/electron dist/gui/digimon_randomize
+
+# Copy app code into Electron's resource directory
 mkdir -p dist/gui/resources/app
-cp settings.ini dist/gui/resources/app/
-cp README.md dist/gui/resources/app/
+cp gui/package.json dist/gui/resources/app/
+cp -r gui/dist dist/gui/resources/app/
+cp -r gui/node_modules dist/gui/resources/app/ 2>/dev/null || true
+
+# Inject backend binary and configuration
+cp settings.ini dist/gui/resources/app/ 2>/dev/null || true
+cp README.md dist/gui/resources/app/ 2>/dev/null || true
 mv dist/digimon_randomize dist/gui/resources/app/
 
-echo "==> Build finished successfully in dist/gui!"
+# Create archive
+zip -r dist/digimon_randomizer.zip dist/gui
 
-echo "==> Zipping dist..."
-zip -r dist/digimon_randomizer.zip dist
-
-echo "==> Zip OK!"
+echo "==> Build complete! Binary located at: dist/gui/digimon_randomize"
