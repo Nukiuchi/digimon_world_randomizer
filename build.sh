@@ -26,7 +26,7 @@ echo "==> Assembling distribution folder..."
 mkdir -p dist/gui/resources/app
 
 # Copy the Linux-packaged Electron app into dist/gui
-cp -r gui/digimon_randomize-linux-x64/* dist/gui/
+cp -r gui/*-linux-x64/* dist/gui/
 
 # Copy configuration and static resources
 cp settings.ini README.md dist/gui/resources/app/
