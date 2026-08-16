@@ -4,12 +4,12 @@ const rebuild = require('@electron/rebuild').default
 (async () => {
   try {
     const appPaths = await packager({
-      dir: '.',
-      name: 'digimon_randomize',
-      platform: 'linux',
-      arch: 'x64',
-      out: '.',
-      overwrite: true
+  dir: __dirname,
+  afterCopy: [(buildPath, electronVersion, platform, arch, callback) => {
+    rebuild({ buildPath, electronVersion, arch })
+      .then(() => callback())
+      .catch((error) => callback(error));
+  }]
     });
     console.log(`Packaged successfully to: ${appPaths}`);
   } catch (err) {
