@@ -2,11 +2,14 @@
 ##### Digimon World 1 (PSX) data randomizer.  Create a unique, brand new experience for the classic game!
 
 This fork is an attempted conversion to use on Linux.
+What's new: 
+- build.sh script to build the project on Linux.
+- Changes to the project to make building succeed with current versions of dependencies.
 
 ###### Steps for first time setup:
 1. Download the latest release of `digimon_randomizer.zip`
 2. Unzip to wherever
-3. Run `digimon_randomize.exe` and select any or all options.  
+3. Run `digimon_randomize` and select any or all options.  
 4. Press the `Randomize` button.
 5. Load the `.bin` file with the name you specified in the emulator of your choice.
 
