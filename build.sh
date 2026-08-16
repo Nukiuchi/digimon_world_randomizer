@@ -15,7 +15,6 @@ pyinstaller --clean --onefile --log-level ERROR digimon_randomize.py
 
 echo "==> Building Electron GUI frontend..."
 cd gui
-npm config set ignore-scripts false
 npm_config_ignore_scripts=false npm install
 node node_modules/electron/install.js
 npm run build
