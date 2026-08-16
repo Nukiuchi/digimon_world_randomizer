@@ -19,7 +19,8 @@ echo "==> Building Electron GUI frontend..."
 cd gui
 npm install
 npm run build
-npm run package
+# Force electron-packager to target Linux x64 explicitly
+npx electron-packager . digimon_randomize --platform=linux --arch=x64 --out=dist_app --overwrite
 cd ..
 
 echo "==> Assembling distribution folder..."
