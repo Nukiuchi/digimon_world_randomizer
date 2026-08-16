@@ -1,4 +1,4 @@
-const packager = require('electron-packager')
+const packager = require('@electron/packager')
 const rebuild = require('electron-rebuild').default
 
 packager({
