@@ -17,7 +17,7 @@ echo "==> Building Electron GUI frontend..."
 cd gui
 npm install
 npm run build
-npm run package
+node packager.js
 cd ..
 
 echo "==> Assembling distribution folder..."
